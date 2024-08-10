@@ -1,5 +1,4 @@
 .main {
-    // background-color: #f0f0f0;
     background-image: url(./../../../assets/Images/Login-Page.jpg);
     display: flex;
     justify-content: center;
@@ -15,12 +14,13 @@
     width: 100%;
   }
   
-  .login-box {
+  .register-box {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    width: 100%;
+    max-width: 600px;
   }
   
   h1 {
@@ -30,8 +30,14 @@
     color: #FEC33A;
   }
   
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
   .textbox {
-    margin-bottom: 15px;
+    flex: 1 1 100%; /* Default to full width on smaller screens */
   }
   
   .textbox label {
@@ -49,7 +55,7 @@
   }
   
   .textbox input:focus {
-    border-color: #007bff;
+    border-color: #FEC33A;
   }
   
   .btn {
@@ -59,9 +65,9 @@
     border-radius: 4px;
     background: linear-gradient(270deg, rgba(254, 195, 58, 0.80) 0%, #FEC33A 100%);
     color: black;
-    // color: white;
     font-size: 16px;
     cursor: pointer;
+    margin-top: 1rem;
   }
   
   .btn:hover {
@@ -69,21 +75,16 @@
     filter: drop-shadow(0 0 0.75rem #FEC33A);
   }
   
-  .forgot {
-    display: block;
-    text-align: right;
-    margin-top: 10px;
-    color: #FEC33A;
-    text-decoration: none;
-    font-size: 1rem;
-  }
-  
-  .forgot:hover {
-    text-decoration: underline;
-  }
-  
   .error-message {
     color: red;
     font-size: 12px;
     margin-top: 5px;
   }
+  
+  /* Media Query for Desktop and Large Devices */
+  @media (min-width: 768px) {
+    .textbox {
+      flex: 1 1 calc(33.3333% - 10px); /* 3 columns layout */
+    }
+  }
+  

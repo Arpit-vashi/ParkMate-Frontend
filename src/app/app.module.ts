@@ -1,16 +1,33 @@
+import { ButtonModule } from 'primeng/button';
 import { NgModule } from '@angular/core';
-import { PathLocationStrategy, LocationStrategy } from '@angular/common';
+import {
+    PathLocationStrategy,
+    LocationStrategy,
+    CommonModule,
+} from '@angular/common';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutModule } from './layout/app.layout.module';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { LoginPageComponent } from './auth/login-page/login-page.component';
+import { RegisterPageComponent } from './auth/register-page/register-page.component';
 
 @NgModule({
-    declarations: [AppComponent, NotfoundComponent],
-    imports: [AppRoutingModule, AppLayoutModule],
-    providers: [
-        { provide: LocationStrategy, useClass: PathLocationStrategy },
+    declarations: [
+        AppComponent, 
+        NotfoundComponent, 
+        LoginPageComponent,
+        RegisterPageComponent
     ],
+    imports: [
+        AppRoutingModule,
+        AppLayoutModule,
+        ReactiveFormsModule,
+        CommonModule,
+        ButtonModule,
+    ],
+    providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }],
     bootstrap: [AppComponent],
 })
 export class AppModule {}
