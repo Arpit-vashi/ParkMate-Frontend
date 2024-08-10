@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LoginPageComponent } from './auth/login-page/login-page.component';
 import { RegisterPageComponent } from './auth/register-page/register-page.component';
+import { ParkingLotManagementComponent } from './pages/parking-lot-management/parking-lot-management.component';
 
 @NgModule({
     imports: [
@@ -15,6 +16,7 @@ import { RegisterPageComponent } from './auth/register-page/register-page.compon
                     component: AppLayoutComponent,
                     children: [
                         { path: '', component:  DashboardComponent},
+                        { path: 'parking-lot-management', component:  ParkingLotManagementComponent},
                     ],   
                 },
                 {
