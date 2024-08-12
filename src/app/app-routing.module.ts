@@ -6,6 +6,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LoginPageComponent } from './auth/login-page/login-page.component';
 import { RegisterPageComponent } from './auth/register-page/register-page.component';
 import { ParkingLotManagementComponent } from './pages/parking-lot-management/parking-lot-management.component';
+import { UserManagementComponent } from './pages/user-management/user-management.component';
 
 @NgModule({
     imports: [
@@ -17,6 +18,7 @@ import { ParkingLotManagementComponent } from './pages/parking-lot-management/pa
                     children: [
                         { path: '', component:  DashboardComponent},
                         { path: 'parking-lot-management', component:  ParkingLotManagementComponent},
+                        { path: 'user-management', component:  UserManagementComponent},
                     ],   
                 },
                 {

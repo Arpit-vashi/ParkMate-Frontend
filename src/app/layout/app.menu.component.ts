@@ -23,7 +23,7 @@ export class AppMenuComponent implements OnInit {
                     { label: 'Lost & Found', icon: 'fa-solid fa-person-circle-question', routerLink: ['/login'] },
                     { label: 'Addon Services', icon: 'fa-solid fa-bell-concierge', routerLink: ['/login'] },
                     { label: 'Offers Management', icon: 'fa-solid fa-percent', routerLink: ['/login'] },
-                    { label: 'User Management', icon: 'fa-solid fa-user', routerLink: ['/login'] },
+                    { label: 'User Management', icon: 'fa-solid fa-user', routerLink: ['/user-management'] },
                     { label: 'Employee Management', icon: 'fa-solid fa-user-gear', routerLink: ['/login'] },
                 ]
             },
