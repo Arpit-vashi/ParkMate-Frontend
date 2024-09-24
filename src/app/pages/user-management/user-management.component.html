@@ -1,4 +1,140 @@
 <div>
-    <div><h4><strong>User Management</strong></h4></div>
+    <div>
+        <h4><strong>User Management</strong></h4>
+    </div>
 </div>
-<hr>
+<hr />
+<div class="p-fluid">
+    <div class="p-formgrid grid">
+        <div class="field col">
+            <label htmlFor="name2"
+                ><strong
+                    >Full Name<span class="required-feild">*</span> :</strong
+                ></label
+            >
+            <input pInputText id="name2" type="text" />
+        </div>
+        <div class="field col">
+            <label htmlFor="name2"
+                ><strong
+                    >Username<span class="required-feild">*</span> :</strong
+                ></label
+            >
+            <input pInputText id="name2" type="text" />
+        </div>
+    </div>
+    <div class="p-formgrid grid">
+        <div class="field col">
+            <label htmlFor="name2"
+                ><strong
+                    >Mobile Number<span class="required-feild">*</span>
+                    :</strong
+                ></label
+            >
+            <p-inputGroup>
+                <p-inputGroupAddon>
+                    <i class="fa-duotone fa-solid fa-phone"></i>
+                </p-inputGroupAddon>
+                <input pInputText />
+            </p-inputGroup>
+        </div>
+        <div class="field col">
+            <label htmlFor="name2"
+                ><strong
+                    >Email<span class="required-feild">*</span> :</strong
+                ></label
+            >
+            <p-inputGroup>
+                <p-inputGroupAddon>
+                    <i class="fa-solid fa-envelope"></i>
+                </p-inputGroupAddon>
+                <input pInputText />
+            </p-inputGroup>
+        </div>
+    </div>
+    <div class="p-formgrid grid">
+        <div class="field col">
+            <label htmlFor="name2"
+                ><strong
+                    >Password<span class="required-feild">*</span> :</strong
+                ></label
+            >
+            <p-inputGroup>
+                <input type="text" pInputText />
+                <button
+                    type="button"
+                    pButton
+                    icon="fa-solid fa-key"
+                    pTooltip="Genrate a Password"
+                    tooltipPosition="right"
+                    (click)="showDialog()"
+                    (click)="generatePassword()"
+                    class="p-button"
+                ></button>
+            </p-inputGroup>
+        </div>
+        <div class="field col">
+            <label htmlFor="name2"
+                ><strong
+                    >Confirm Password<span class="required-feild">*</span>
+                    :</strong
+                ></label
+            >
+            <input type="text" pInputText />
+        </div>
+    </div>
+    <div class="p-formgrid grid">
+        <div class="field col">
+            <button
+                    type="button"
+                    pButton
+                    icon="fa-solid fa-floppy-disk"
+                    class="p-button"
+                    label="Save User"
+                ></button>
+        </div>
+    </div>
+</div>
+
+<p-dialog header="Password Generator" [modal]="true" [(visible)]="visible">
+    <div class="p-fluid">
+        <div class="p-formgrid grid">
+            <div class="field col">
+                <label for="generatedPassword" class="font-semibold"
+                    ><strong>Generated Password :</strong></label
+                >
+                <input
+                    pInputText
+                    id="generatedPassword"
+                    class="flex-auto"
+                    [value]="generatedPassword"
+                    readonly
+                />
+            </div>
+        </div>
+        <div class="p-formgrid grid">
+            <div class="field col">
+                <p-button
+                    label="Regenrate"
+                    icon="fa-solid fa-arrow-rotate-left"
+                    (click)="generatePassword()"
+                />
+            </div>
+            <div class="field col">
+                <p-button
+                    label="Copy"
+                    (click)="copyPassword()"
+                    [disabled]="!generatedPassword"
+                    icon="fa-duotone fa-solid fa-copy"
+                />
+            </div>
+            <div class="field col">
+                <p-button
+                    label="Cancel"
+                    (click)="closeDialog()"
+                    icon="fas fa-xmark"
+                />
+            </div>
+        </div>
+    </div>
+</p-dialog>

@@ -1,30 +1,42 @@
-import { UserManagementService } from './../../services/user.service';
-import { Component, OnInit } from '@angular/core';
-import { UserResponse } from './../../models/user-management/user-response.model';
+import { Component } from '@angular/core';
+import { MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-user-management',
-  templateUrl: './user-management.component.html',
-  styleUrls: ['./user-management.component.scss']
+    selector: 'app-user-management',
+    templateUrl: './user-management.component.html',
+    styleUrls: ['./user-management.component.scss'],
+    providers: [MessageService]
 })
-export class UserManagementComponent implements OnInit {
+export class UserManagementComponent {
+    visible: boolean = false;
+    generatedPassword: string = '';
 
-  users: UserResponse[] = [];
+    constructor(private messageService: MessageService) {}
 
-  constructor(private userManagementService: UserManagementService) {}
+    showDialog() {
+        this.visible = true;
+    }
 
-  ngOnInit(): void {
-    this.getAllUsers();
+    closeDialog() {
+      this.visible = false;
   }
 
-  getAllUsers(): void {
-    this.userManagementService.getAllUsers().subscribe(
-      (response: UserResponse[]) => {
-        this.users = response;
-      },
-      (error) => {
-        console.error('Error fetching users:', error);
-      }
-    );
-  }
+    generatePassword(length: number = 15): string {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
+        let password = '';
+        for (let i = 0; i < length; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            password += characters.charAt(randomIndex);
+        }
+        this.generatedPassword = password;
+        return password;
+    }
+
+    copyPassword() {
+        if (this.generatedPassword) {
+            navigator.clipboard.writeText(this.generatedPassword).then(() => {
+                this.messageService.add({ severity: 'success', summary: 'Copied', detail: 'Password copied to clipboard!' });
+            });
+        }
+    }
 }

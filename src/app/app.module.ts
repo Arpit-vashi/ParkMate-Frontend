@@ -14,6 +14,13 @@ import { LoginPageComponent } from './auth/login-page/login-page.component';
 import { RegisterPageComponent } from './auth/register-page/register-page.component';
 import { UserManagementComponent } from './pages/user-management/user-management.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { InputTextModule } from 'primeng/inputtext';
+import { TooltipModule } from 'primeng/tooltip';
+import { DialogModule } from 'primeng/dialog';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
     declarations: [
@@ -30,6 +37,13 @@ import { LoaderComponent } from './components/loader/loader.component';
         ReactiveFormsModule,
         CommonModule,
         ButtonModule,
+        InputGroupModule,
+        InputGroupAddonModule,
+        InputTextModule,
+        TooltipModule,
+        DialogModule,
+        ToastModule,
+        ConfirmDialogModule
     ],
     providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }],
     bootstrap: [AppComponent],

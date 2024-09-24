@@ -8,3 +8,7 @@ $gutter: 1rem; //for primeflex grid system
 @import "../node_modules/primeflex/primeflex.scss";
 @import "../node_modules/primeicons/primeicons.css";
 
+.required-feild{
+    color: red;
+    font-weight: bold;
+}
