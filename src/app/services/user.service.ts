@@ -1,61 +1,78 @@
+import { UserResponse } from './../models/user-management/user-response.model';
+import { UserRequest } from './../models/user-management/user-request.model';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { UserRequest } from "./../models/user-management/user-request.model";
-import { UserResponse } from "./../models/user-management/user-response.model";
+import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class UserManagementService {
-  private apiUrl = 'http://localhost:8080/api/users';
-  private http: HttpClient; 
+export class UserService {
+  private baseUrl = `${environment.apiBaseUrl}/users`;
 
-  constructor(http: HttpClient) { 
-    this.http = http;
+  constructor(private http: HttpClient) {}
+
+  // Get all users with pagination
+  getAllUsers(page: number = 0, size: number = 10): Observable<any> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+    return this.http.get<any>(this.baseUrl, { params });
   }
 
-  getAllUsers(): Observable<UserResponse[]> {
-    return this.http.get<UserResponse[]>(this.apiUrl);
+  // Get user by ID
+  getUserById(id: number): Observable<UserResponse> {
+    return this.http.get<UserResponse>(`${this.baseUrl}/${id}`);
   }
 
-  getUserById(id: number): Observable<UserResponse> { 
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.get<UserResponse>(url);
+  // Create a new user (use UserRequest for sending data)
+  createUser(user: UserRequest): Observable<UserResponse> {
+    return this.http.post<UserResponse>(this.baseUrl, user);
   }
 
+  // Update an existing user (use UserRequest for sending data)
+  updateUser(id: number, user: UserRequest): Observable<UserResponse> {
+    return this.http.put<UserResponse>(`${this.baseUrl}/${id}`, user);
+  }
+
+  // Delete a user by ID
+  deleteUser(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
+
+  // Get user by username
   getUserByUsername(username: string): Observable<UserResponse> {
-    const url = `${this.apiUrl}/${username}`;
-    return this.http.get<UserResponse>(url);
+    return this.http.get<UserResponse>(`${this.baseUrl}/username/${username}`);
   }
 
-  getUserByName(name: string): Observable<UserResponse> { 
-    const url = `${this.apiUrl}/${name}`;
-    return this.http.get<UserResponse>(url);
+  // Get user by email
+  getUserByEmail(email: string): Observable<UserResponse> {
+    return this.http.get<UserResponse>(`${this.baseUrl}/email/${email}`);
   }
 
-  getUserByMobileno(mobileno: number): Observable<UserResponse> { 
-    const url = `${this.apiUrl}/${mobileno}`;
-    return this.http.get<UserResponse>(url);
+  // Get user by mobile number
+  getUserByMobileNo(mobileNo: number): Observable<UserResponse> {
+    return this.http.get<UserResponse>(`${this.baseUrl}/mobile/${mobileNo}`);
   }
 
-  getUserByEmail(email: string): Observable<UserResponse> { 
-    const url = `${this.apiUrl}/${email}`;
-    return this.http.get<UserResponse>(url);
+  // Get user by name
+  getUserByName(name: string): Observable<UserResponse> {
+    return this.http.get<UserResponse>(`${this.baseUrl}/name/${name}`);
   }
 
-  addUser(user: UserRequest): Observable<UserResponse> {
-    const url = `${this.apiUrl}`;
-    return this.http.post<UserResponse>(url, user);
+  // Check if username exists
+  checkUsernameExists(username: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.baseUrl}/exists/username/${username}`);
   }
 
-  updateUser(id: number, user: UserRequest): Observable<UserResponse>{
-    const url = `${this.apiUrl}/${id}`
-    return this.http.put<UserResponse>(url, user);
+  // Check if mobile number exists
+  checkMobileExists(mobileNo: number): Observable<boolean> {
+    return this.http.get<boolean>(`${this.baseUrl}/exists/mobile/${mobileNo}`);
   }
 
-  deleteUser(id: number): Observable<UserResponse>{
-    const url = `${this.apiUrl}/${id}`
-    return this.http.delete<UserResponse>(url);
+  // Check if email exists
+  checkEmailExists(email: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.baseUrl}/exists/email/${email}`);
   }
 }

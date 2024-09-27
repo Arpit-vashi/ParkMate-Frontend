@@ -12,7 +12,6 @@ import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginPageComponent } from './auth/login-page/login-page.component';
 import { RegisterPageComponent } from './auth/register-page/register-page.component';
-import { UserManagementComponent } from './pages/user-management/user-management.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
@@ -21,6 +20,9 @@ import { TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { AddUserComponent } from './pages/user/add-user/add-user.component';
+import { ListUserComponent } from './pages/user/list-user/list-user.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
     declarations: [
@@ -28,8 +30,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
         NotfoundComponent, 
         LoginPageComponent,
         RegisterPageComponent,
-        UserManagementComponent,
-        LoaderComponent
+        LoaderComponent,
+        AddUserComponent,
+        ListUserComponent
     ],
     imports: [
         AppRoutingModule,
@@ -43,7 +46,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
         TooltipModule,
         DialogModule,
         ToastModule,
-        ConfirmDialogModule
+        ConfirmDialogModule,
+        ReactiveFormsModule,
+        DropdownModule
     ],
     providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }],
     bootstrap: [AppComponent],

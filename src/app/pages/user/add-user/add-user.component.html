@@ -1,0 +1,177 @@
+<div>
+    <div>
+        <h4><strong>Create User</strong></h4>
+    </div>
+</div>
+<hr />
+<div class="p-fluid">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div class="p-formgrid grid">
+            <div class="field col">
+                <label for="name"><strong>Full Name<span class="required-feild">*</span> :</strong></label>
+                <input pInputText id="name" formControlName="name" />
+                <div *ngIf="userForm.get('name')?.invalid && submitted" class="error-message">
+                    <small *ngIf="userForm.get('name')?.errors?.required">Name is required.</small>
+                    <small *ngIf="userForm.get('name')?.errors?.minlength">Minimum 3 characters required.</small>
+                </div>
+            </div>
+            <div class="field col">
+                <label for="username"><strong>Username<span class="required-feild">*</span> :</strong></label>
+                <input pInputText id="username" formControlName="username" />
+                <div *ngIf="userForm.get('username')?.invalid && submitted" class="error-message">
+                    <small *ngIf="userForm.get('username')?.errors?.required">Username is required.</small>
+                    <small *ngIf="userForm.get('username')?.errors?.minlength">Minimum 3 characters required.</small>
+                </div>
+            </div>
+        </div>
+        <div class="p-formgrid grid">
+            <div class="field col">
+                <label for="mobileNo"><strong>Mobile Number<span class="required-feild">*</span> :</strong></label>
+                <p-inputGroup>
+                    <p-inputGroupAddon>
+                        <i class="fa-duotone fa-solid fa-phone"></i>
+                    </p-inputGroupAddon>
+                    <input pInputText id="mobileNo" formControlName="mobileNo" />
+                </p-inputGroup>
+                <div *ngIf="userForm.get('mobileNo')?.invalid && submitted" class="error-message">
+                    <small *ngIf="userForm.get('mobileNo')?.errors?.required">Mobile number is required.</small>
+                    <small *ngIf="userForm.get('mobileNo')?.errors?.pattern">Invalid mobile number format.</small>
+                </div>
+            </div>
+            <div class="field col">
+                <label for="email"><strong>Email<span class="required-feild">*</span> :</strong></label>
+                <p-inputGroup>
+                    <p-inputGroupAddon>
+                        <i class="fa-solid fa-envelope"></i>
+                    </p-inputGroupAddon>
+                    <input pInputText id="email" formControlName="email" />
+                </p-inputGroup>
+                <div *ngIf="userForm.get('email')?.invalid && submitted" class="error-message">
+                    <small *ngIf="userForm.get('email')?.errors?.required">Email is required.</small>
+                    <small *ngIf="userForm.get('email')?.errors?.email">Invalid email format.</small>
+                </div>
+            </div>
+        </div>
+        <div class="p-formgrid grid">
+            <div class="field col">
+                <label for="address"><strong>Address<span class="required-feild">*</span> :</strong></label>
+                <input pInputText id="address" formControlName="address" />
+                <div *ngIf="userForm.get('address')?.invalid && submitted" class="error-message">
+                    <small *ngIf="userForm.get('address')?.errors?.required">Address is required.</small>
+                </div>
+            </div>
+            <div class="field col">
+                <label for="city"><strong>City<span class="required-feild">*</span> :</strong></label>
+                <input pInputText id="city" formControlName="city" />
+                <div *ngIf="userForm.get('city')?.invalid && submitted" class="error-message">
+                    <small *ngIf="userForm.get('city')?.errors?.required">City is required.</small>
+                </div>
+            </div>
+        </div>
+        <div class="p-formgrid grid">
+            <div class="field col">
+                <label for="state"><strong>State<span class="required-feild">*</span> :</strong></label>
+                <input pInputText id="state" formControlName="state" />
+                <div *ngIf="userForm.get('state')?.invalid && submitted" class="error-message">
+                    <small *ngIf="userForm.get('state')?.errors?.required">State is required.</small>
+                </div>
+            </div>
+            <div class="field col">
+                <label for="country"><strong>Country<span class="required-feild">*</span> :</strong></label>
+                <p-dropdown
+                    id="country"
+                    formControlName="countryId"
+                    [options]="countries"
+                    optionLabel="name"
+                    placeholder="Select a country"
+                    [showClear]="true"
+                    [filter]="true"
+                    filterBy="name"
+                    [disabled]="loading"
+                ></p-dropdown>
+                <div *ngIf="userForm.get('country')?.invalid && submitted" class="error-message">
+                    <small *ngIf="userForm.get('country')?.errors?.required">Country is required.</small>
+                </div>
+            </div>
+            
+        </div>
+        <div class="p-formgrid grid">
+            <div class="field col">
+                <label for="password"><strong>Password<span class="required-feild">*</span> :</strong></label>
+                <p-inputGroup>
+                    <input type="text" pInputText id="password" formControlName="password" />
+                    <button
+                        type="button"
+                        pButton
+                        icon="fa-solid fa-key"
+                        pTooltip="Generate a Password"
+                        tooltipPosition="right"
+                        (click)="showDialog()"
+                        (click)="generatePassword()"
+                        class="p-button"
+                    ></button>
+                </p-inputGroup>
+                <div *ngIf="userForm.get('password')?.invalid && submitted" class="error-message">
+                    <small *ngIf="userForm.get('password')?.errors?.required">Password is required.</small>
+                    <small *ngIf="userForm.get('password')?.errors?.minlength">Minimum 8 characters required.</small>
+                </div>
+            </div>
+            <div class="field col">
+                <label for="confirmPassword"><strong>Confirm Password<span class="required-feild">*</span> :</strong></label>
+                <input type="text" pInputText id="confirmPassword" formControlName="confirmPassword" />
+                <div *ngIf="userForm.get('confirmPassword')?.invalid && submitted" class="error-message">
+                    <small *ngIf="userForm.get('confirmPassword')?.errors?.required">Confirm Password is required.</small>
+                    <small *ngIf="userForm.hasError('mismatch') && userForm.get('confirmPassword')?.touched">Passwords do not match.</small>
+                </div>
+            </div>
+        </div>
+        <div class="p-formgrid grid">
+            <div class="field col">
+                <button
+                    type="submit"
+                    pButton
+                    icon="fa-solid fa-floppy-disk"
+                    class="p-button"
+                    label="Save User"
+                    [disabled]="userForm.invalid || loading"
+                ></button>
+                <p-progressSpinner *ngIf="loading" styleClass="p-mt-2" [style]="{ width: '30px', height: '30px' }"></p-progressSpinner> <!-- Loading spinner -->
+            </div>
+        </div>
+    </form>
+</div>
+
+<p-dialog header="Password Generator" [modal]="true" [(visible)]="visible">
+    <div class="p-fluid">
+        <div class="p-formgrid grid">
+            <div class="field col">
+                <label for="generatedPassword" class="font-semibold"><strong>Generated Password :</strong></label>
+                <input pInputText id="generatedPassword" class="flex-auto" [value]="generatedPassword" readonly />
+            </div>
+        </div>
+        <div class="p-formgrid grid">
+            <div class="field col">
+                <p-button
+                    label="Regenerate"
+                    icon="fa-solid fa-arrow-rotate-left"
+                    (click)="generatePassword()"
+                />
+            </div>
+            <div class="field col">
+                <p-button
+                    label="Copy"
+                    (click)="copyPassword()"
+                    [disabled]="!generatedPassword"
+                    icon="fa-duotone fa-solid fa-copy"
+                />
+            </div>
+            <div class="field col">
+                <p-button
+                    label="Cancel"
+                    (click)="closeDialog()"
+                    icon="fas fa-xmark"
+                />
+            </div>
+        </div>
+    </div>
+</p-dialog>
