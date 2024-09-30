@@ -1,32 +1,57 @@
-<!-- src/app/list-user/list-user.component.html -->
-
-<div>
-    <h2>User List</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Username</th>
-          <th>Email</th>
-          <th>Mobile</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of users">
-          <td>{{ user.userId }}</td>
-          <td>{{ user.name }}</td>
-          <td>{{ user.username }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.mobileNo }}</td>
-        </tr>
-      </tbody>
-    </table>
-  
-    <!-- <div>
-      <button (click)="previousPage()" [disabled]="currentPage === 0">Previous</button>
-      <span>Page {{ currentPage + 1 }} of {{ totalPages }}</span>
-      <button (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">Next</button>
-    </div> -->
+<div class="card">
+  <div class="search-container">
+    <input
+      [(ngModel)]="searchValue"
+      (ngModelChange)="onSearch()"
+      placeholder="Search users..."
+      class="search-input"
+    />
+    <button (click)="clear(dt1)" class="clear-button">Clear</button>
   </div>
-  
+  <p-table
+    #dt1
+    [value]="users"
+    [paginator]="true"
+    [rows]="pageSize"
+    [totalRecords]="totalPages * pageSize"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [loading]="loading"
+    [responsiveLayout]="'scroll'"
+    [globalFilterFields]="['name', 'username', 'email', 'mobileNo']"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="userId" (click)="changeSort('userId')">ID <p-sortIcon field="userId"></p-sortIcon></th>
+<th pSortableColumn="name" (click)="changeSort('name')">Name <p-sortIcon field="name"></p-sortIcon></th>
+<th pSortableColumn="username" (click)="changeSort('username')">Username <p-sortIcon field="username"></p-sortIcon></th>
+<th pSortableColumn="email" (click)="changeSort('email')">Email <p-sortIcon field="email"></p-sortIcon></th>
+<th pSortableColumn="mobileNo" (click)="changeSort('mobileNo')">Mobile <p-sortIcon field="mobileNo"></p-sortIcon></th>
+
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-user>
+      <tr>
+        <td>{{ user.userId }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email || 'N/A' }}</td>
+        <td>{{ user.mobileNo }}</td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="5">No users found.</td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <tr>
+        <td colspan="5">
+          <p-paginator [rows]="pageSize" [totalRecords]="totalPages * pageSize" [first]="currentPage * pageSize" (onPageChange)="onPageChange($event)"></p-paginator>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

@@ -4,6 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Pageable } from '../models/pageable/pageable.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,13 +15,19 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   // Get all users with pagination
-  getAllUsers(page: number = 0, size: number = 10): Observable<any> {
-    const params = new HttpParams()
+  getAllUsers(page: number = 0, size: number = 10, sortBy?: string, sortOrder?: string): Observable<any> {
+    let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
+    if (sortBy) {
+      params = params.set('sortBy', sortBy);
+    }
+    if (sortOrder) {
+      params = params.set('sortOrder', sortOrder);
+    }
+
     return this.http.get<any>(this.baseUrl, { params });
   }
-
   // Get user by ID
   getUserById(id: number): Observable<UserResponse> {
     return this.http.get<UserResponse>(`${this.baseUrl}/${id}`);
@@ -74,5 +81,14 @@ export class UserService {
   // Check if email exists
   checkEmailExists(email: string): Observable<boolean> {
     return this.http.get<boolean>(`${this.baseUrl}/exists/email/${email}`);
+  }
+
+  searchUsers(searchTerm: string, page: number = 0, size: number = 10): Observable<Pageable<UserResponse>> {
+    const params = new HttpParams()
+      .set('searchTerm', searchTerm)
+      .set('page', page.toString())
+      .set('size', size.toString());
+
+    return this.http.get<Pageable<UserResponse>>(`${this.baseUrl}/search`, { params });
   }
 }

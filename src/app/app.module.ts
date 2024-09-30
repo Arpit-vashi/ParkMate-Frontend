@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutModule } from './layout/app.layout.module';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginPageComponent } from './auth/login-page/login-page.component';
 import { RegisterPageComponent } from './auth/register-page/register-page.component';
 import { LoaderComponent } from './components/loader/loader.component';
@@ -23,6 +23,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { AddUserComponent } from './pages/user/add-user/add-user.component';
 import { ListUserComponent } from './pages/user/list-user/list-user.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
     declarations: [
@@ -32,7 +33,8 @@ import { DropdownModule } from 'primeng/dropdown';
         RegisterPageComponent,
         LoaderComponent,
         AddUserComponent,
-        ListUserComponent
+        ListUserComponent,
+        
     ],
     imports: [
         AppRoutingModule,
@@ -48,7 +50,10 @@ import { DropdownModule } from 'primeng/dropdown';
         ToastModule,
         ConfirmDialogModule,
         ReactiveFormsModule,
-        DropdownModule
+        DropdownModule,
+        TableModule,
+        ReactiveFormsModule,
+        FormsModule
     ],
     providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }],
     bootstrap: [AppComponent],
