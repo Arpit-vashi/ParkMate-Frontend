@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { UserResponse } from '../../../models/user-management/user-response.model';
 import { Pageable } from '../../../models/pageable/pageable.model';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-user',
@@ -14,25 +17,31 @@ export class ListUserComponent implements OnInit {
   currentPage: number = 0;
   pageSize: number = 10;
   loading: boolean = true;
+  sidebarVisible: boolean = false;
   searchValue: string | undefined = '';
+  searchSubject: Subject<string> = new Subject<string>();
   currentSortField: string = '';
   currentSortOrder: 'asc' | 'desc' = 'asc';
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     console.log('OnInit: Fetching users...');
-    // Fetch all users without any filters or sorting on initial load
     this.fetchUsers(this.currentPage, this.pageSize);
+    
+    // Subscribe to search subject with debounce
+    this.searchSubject.pipe(debounceTime(300)).subscribe(searchTerm => {
+      this.onSearch(searchTerm);
+    });
   }
 
-  fetchUsers(page: number, size: number, sortBy?: string, sortOrder?: 'asc' | 'desc'): void {
+  fetchUsers(page: number, size: number, sortBy?: string, sortOrder?: 'asc' | 'desc', searchTerm?: string): void {
     console.log('Fetching users: page=', page, ', size=', size, ', sortBy=', sortBy, ', sortOrder=', sortOrder);
     this.loading = true;
 
-    if (this.searchValue && this.searchValue.trim()) {
-      console.log('Searching for:', this.searchValue.trim());
-      this.userService.searchUsers(this.searchValue.trim(), page, size).subscribe({
+    if (searchTerm && searchTerm.trim()) {
+      console.log('Searching for:', searchTerm.trim());
+      this.userService.searchUsers(searchTerm.trim(), page, size).subscribe({
         next: (response: Pageable<UserResponse>) => {
           console.log('Search results:', response);
           this.users = response.content;
@@ -46,7 +55,6 @@ export class ListUserComponent implements OnInit {
       });
     } else {
       console.log('Fetching all users...');
-      // Call the API with optional sorting parameters (they can be undefined)
       this.userService.getAllUsers(page, size, sortBy, sortOrder).subscribe({
         next: (response) => {
           console.log('All users:', response);
@@ -66,13 +74,13 @@ export class ListUserComponent implements OnInit {
     console.log('Page changed: page=', event.page, ', rows=', event.rows);
     this.currentPage = event.page;
     this.pageSize = event.rows;
-    this.fetchUsers(this.currentPage, this.pageSize, this.currentSortField, this.currentSortOrder);
+    this.fetchUsers(this.currentPage, this.pageSize, this.currentSortField, this.currentSortOrder, this.searchValue);
   }
 
-  onSearch(): void {
-    console.log('Search initiated...');
-    this.currentPage = 0;
-    this.fetchUsers(this.currentPage, this.pageSize, this.currentSortField, this.currentSortOrder);
+  onSearch(searchTerm: string): void {
+    console.log('Search initiated for:', searchTerm);
+    this.currentPage = 0; // Reset to first page on search
+    this.fetchUsers(this.currentPage, this.pageSize, this.currentSortField, this.currentSortOrder, searchTerm);
   }
 
   clear(table: any): void {
@@ -91,6 +99,10 @@ export class ListUserComponent implements OnInit {
     }
 
     this.currentPage = 0;
-    this.fetchUsers(this.currentPage, this.pageSize, this.currentSortField, this.currentSortOrder);
+    this.fetchUsers(this.currentPage, this.pageSize, this.currentSortField, this.currentSortOrder, this.searchValue);
+  }
+
+  navigateToUpdateUser(userId: number): void {
+    this.router.navigate(['/update-user', userId]);
   }
 }

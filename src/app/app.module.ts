@@ -24,6 +24,9 @@ import { AddUserComponent } from './pages/user/add-user/add-user.component';
 import { ListUserComponent } from './pages/user/list-user/list-user.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
+import { PaginatorModule } from 'primeng/paginator';
+import { SidebarModule } from 'primeng/sidebar';
+import { UpdateUserComponent } from './pages/user/update-user/update-user.component';
 
 @NgModule({
     declarations: [
@@ -34,6 +37,7 @@ import { TableModule } from 'primeng/table';
         LoaderComponent,
         AddUserComponent,
         ListUserComponent,
+        UpdateUserComponent
         
     ],
     imports: [
@@ -53,7 +57,9 @@ import { TableModule } from 'primeng/table';
         DropdownModule,
         TableModule,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
+        PaginatorModule,
+        SidebarModule
     ],
     providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }],
     bootstrap: [AppComponent],

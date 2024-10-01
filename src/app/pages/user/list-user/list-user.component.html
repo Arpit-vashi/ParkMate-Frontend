@@ -1,20 +1,26 @@
 <div class="card">
-  <div class="search-container">
-    <input
-      [(ngModel)]="searchValue"
-      (ngModelChange)="onSearch()"
-      placeholder="Search users..."
-      class="search-input"
-    />
-    <button (click)="clear(dt1)" class="clear-button">Clear</button>
+  <div class="head-container">
+    <h3><strong>Users List</strong></h3>
+    <div class="search-container">
+      <input
+        [(ngModel)]="searchValue"
+        (ngModelChange)="searchSubject.next(searchValue)"
+        placeholder="Search users..."
+        class="search-input"
+        pInputText 
+        class="mr-3"
+      />
+      <p-button  [raised]="true" icon="fa-solid fa-broom-wide" (click)="clear(dt1)" class="clear-button"></p-button>
+    </div>
   </div>
+  
+  <hr>
+
   <p-table
     #dt1
     [value]="users"
-    [paginator]="true"
     [rows]="pageSize"
     [totalRecords]="totalPages * pageSize"
-    [rowsPerPageOptions]="[10, 25, 50]"
     [loading]="loading"
     [responsiveLayout]="'scroll'"
     [globalFilterFields]="['name', 'username', 'email', 'mobileNo']"
@@ -22,11 +28,12 @@
     <ng-template pTemplate="header">
       <tr>
         <th pSortableColumn="userId" (click)="changeSort('userId')">ID <p-sortIcon field="userId"></p-sortIcon></th>
-<th pSortableColumn="name" (click)="changeSort('name')">Name <p-sortIcon field="name"></p-sortIcon></th>
-<th pSortableColumn="username" (click)="changeSort('username')">Username <p-sortIcon field="username"></p-sortIcon></th>
-<th pSortableColumn="email" (click)="changeSort('email')">Email <p-sortIcon field="email"></p-sortIcon></th>
-<th pSortableColumn="mobileNo" (click)="changeSort('mobileNo')">Mobile <p-sortIcon field="mobileNo"></p-sortIcon></th>
-
+        <th pSortableColumn="name" (click)="changeSort('name')">Name <p-sortIcon field="name"></p-sortIcon></th>
+        <th pSortableColumn="username" (click)="changeSort('username')">Username <p-sortIcon field="username"></p-sortIcon></th>
+        <th pSortableColumn="email" (click)="changeSort('email')">Email <p-sortIcon field="email"></p-sortIcon></th>
+        <th pSortableColumn="mobileNo" (click)="changeSort('mobileNo')">Mobile <p-sortIcon field="mobileNo"></p-sortIcon></th>
+        <th pSortableColumn="city" (click)="changeSort('city')">City <p-sortIcon field="city"></p-sortIcon></th>
+        <th>Action</th>
       </tr>
     </ng-template>
 
@@ -37,6 +44,12 @@
         <td>{{ user.username }}</td>
         <td>{{ user.email || 'N/A' }}</td>
         <td>{{ user.mobileNo }}</td>
+        <td>{{ user.city }}</td>
+        <td class="action-container">
+          <p-button icon="fa-solid fa-circle-info" severity="info"/>
+          <p-button icon="fas fa-pen-to-square" severity="warning"/>
+          <p-button icon="fa-solid fa-trash" severity="danger"/>
+        </td>
       </tr>
     </ng-template>
 
@@ -49,9 +62,18 @@
     <ng-template pTemplate="footer">
       <tr>
         <td colspan="5">
-          <p-paginator [rows]="pageSize" [totalRecords]="totalPages * pageSize" [first]="currentPage * pageSize" (onPageChange)="onPageChange($event)"></p-paginator>
+          <p-paginator
+            [rows]="pageSize"
+            [totalRecords]="totalPages * pageSize"
+            (onPageChange)="onPageChange($event)"
+            [rowsPerPageOptions]="[10, 25, 50]"
+            [first]="currentPage * pageSize"
+          ></p-paginator>
         </td>
       </tr>
     </ng-template>
   </p-table>
 </div>
+<p-sidebar [(visible)]="sidebarVisible" position="right">
+  <h3>Right Sidebar</h3>
+</p-sidebar>

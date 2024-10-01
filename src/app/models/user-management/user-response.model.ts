@@ -3,7 +3,10 @@ export interface UserResponse {
     name: string;
     username: string;
     email: string;
-    mobileNo: number;
+    mobileNo: string;
     createdAt: string;
     updatedAt: string;
+    city: string;     
+    state: string;     
+    countryId: number;
 }

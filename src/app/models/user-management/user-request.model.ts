@@ -8,7 +8,7 @@ export interface UserRequest {
   address: string;     
   city: string;     
   state: string;     
-  countryId: number; 
+  countryId: number;
   countryName?: string; 
   createdAt?: string;   
   updatedAt?: string;        

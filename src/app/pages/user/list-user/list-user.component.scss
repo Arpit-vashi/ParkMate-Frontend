@@ -1,0 +1,15 @@
+.head-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.action-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.clear-button{
+    background: linear-gradient(270deg, rgba(254, 195, 58, 0.8) 0%, #FEC33A 100%);
+}
